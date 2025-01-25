@@ -97,7 +97,8 @@ button:hover {
 
 .input__block {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
 }
 
