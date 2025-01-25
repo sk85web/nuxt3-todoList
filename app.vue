@@ -1,20 +1,30 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const tasks = ref([]);
 const newTask = ref({ title: '', id: null, isComplited: false });
 
+if (typeof window !== 'undefined') {
+  tasks.value = JSON.parse(localStorage.getItem('tasks') || []);
+}
+
+watch(
+  tasks,
+  (newTasks) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('tasks', JSON.stringify(newTasks));
+    }
+  },
+  { deep: true }
+);
+
 const addTask = () => {
   if (!newTask.value.title.trim()) return;
 
-  tasks.value = [
-    {
-      title: newTask.value.title,
-      id: Math.random() * 101,
-      isComplited: false,
-    },
-    ...tasks.value,
-  ];
+  tasks.value.unshift({
+    ...newTask.value,
+    id: Date.now(),
+  });
 
   newTask.value.title = '';
 };
