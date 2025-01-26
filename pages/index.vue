@@ -6,10 +6,8 @@ const newTask = ref({ title: '', id: null, isComplited: false });
 const isMounted = ref(false);
 
 onMounted(() => {
-  // if (typeof window !== 'undefined') {
   tasks.value = JSON.parse(localStorage.getItem('tasks') || []);
   isMounted.value = true;
-  // }
 });
 
 watch(
@@ -25,12 +23,25 @@ watch(
 const addTask = () => {
   if (!newTask.value.title.trim()) return;
 
-  tasks.value.unshift({
-    ...newTask.value,
-    id: Date.now(),
-  });
-
+  if (newTask.id !== null) {
+    const task = tasks.value.find((task) => task.id === newTask.value.id);
+    if (task) {
+      task.title = newTask.value.title.trim();
+    }
+  } else {
+    tasks.value.unshift({
+      ...newTask.value,
+      id: Date.now(),
+    });
+  }
   newTask.value.title = '';
+};
+
+const editTask = (id) => {
+  const task = tasks.value.find((task) => task.id === id);
+  if (task) {
+    newTask.value = { ...task };
+  }
 };
 
 const removeTask = (id) => {
@@ -62,6 +73,7 @@ const completeTask = (id) => {
           <TaskItem
             :task="task"
             :completeTask="completeTask"
+            :editTask="editTask"
             :removeTask="removeTask"
           />
         </li>

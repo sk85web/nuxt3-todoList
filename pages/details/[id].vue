@@ -18,7 +18,6 @@ onMounted(() => {
     <p v-if="isMounted">
       Task title: <span>{{ task.title }}</span>
     </p>
-    <!-- <p v-else>Please, wait...</p> -->
 
     <NuxtLink class="home-link" to="/">Go Home</NuxtLink>
   </div>

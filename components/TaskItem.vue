@@ -10,6 +10,10 @@ defineProps({
     type: Function,
     required: true,
   },
+  editTask: {
+    type: Function,
+    required: true,
+  },
   removeTask: {
     type: Function,
     required: true,
@@ -30,7 +34,10 @@ defineProps({
         {{ task.title }}
       </NuxtLink>
     </label>
-    <Button :callBack="() => removeTask(task.id)" children="Delete" />
+    <div class="btn-field">
+      <Button :callBack="() => editTask(task.id)" children="Edit" />
+      <Button :callBack="() => removeTask(task.id)" children="Delete" />
+    </div>
   </div>
 </template>
 
@@ -63,5 +70,10 @@ defineProps({
 
 .complited {
   text-decoration: line-through;
+}
+
+.btn-field {
+  display: flex;
+  gap: 10px;
 }
 </style>
