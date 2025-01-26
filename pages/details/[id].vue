@@ -3,20 +3,22 @@ const route = useRoute();
 const id = route.params.id;
 
 const task = ref(null);
+const isMounted = ref(false);
 
-if (typeof window !== 'undefined') {
+onMounted(() => {
   const tasks = JSON.parse(localStorage.getItem('tasks'));
   task.value = tasks.find((todo) => todo.id.toString() === id);
-}
+  isMounted.value = true;
+});
 </script>
 
 <template>
   <div class="container">
     <h1 class="title">Task Details</h1>
-    <p v-if="task">
+    <p v-if="isMounted">
       Task title: <span>{{ task.title }}</span>
     </p>
-    <p v-else>Please, wait...</p>
+    <!-- <p v-else>Please, wait...</p> -->
 
     <NuxtLink class="home-link" to="/">Go Home</NuxtLink>
   </div>

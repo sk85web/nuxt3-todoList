@@ -3,10 +3,14 @@ import Button from '../components/ui/Button.vue';
 
 const tasks = ref([]);
 const newTask = ref({ title: '', id: null, isComplited: false });
+const isMounted = ref(false);
 
-if (typeof window !== 'undefined') {
+onMounted(() => {
+  // if (typeof window !== 'undefined') {
   tasks.value = JSON.parse(localStorage.getItem('tasks') || []);
-}
+  isMounted.value = true;
+  // }
+});
 
 watch(
   tasks,
@@ -50,17 +54,19 @@ const completeTask = (id) => {
       <Button :callBack="() => addTask()" children="Add" />
     </div>
 
-    <p v-if="!tasks.length" class="empty-list">You haven't any task yet</p>
+    <template v-if="isMounted">
+      <p v-if="!tasks.length" class="empty-list">You haven't any task yet</p>
 
-    <ul class="tasks-list" v-else>
-      <li v-for="task in tasks" :key="task.id">
-        <TaskItem
-          :task="task"
-          :completeTask="completeTask"
-          :removeTask="removeTask"
-        />
-      </li>
-    </ul>
+      <ul class="tasks-list" v-else>
+        <li v-for="task in tasks" :key="task.id">
+          <TaskItem
+            :task="task"
+            :completeTask="completeTask"
+            :removeTask="removeTask"
+          />
+        </li>
+      </ul>
+    </template>
   </div>
 </template>
 
