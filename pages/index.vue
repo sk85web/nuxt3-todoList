@@ -1,5 +1,5 @@
 <script setup>
-// import Button from '../components/ui/Button.vue';
+import Button from '../components/ui/Button.vue';
 
 const tasks = ref([]);
 const newTask = ref({ title: '', id: null, isComplited: false });
@@ -47,8 +47,7 @@ const completeTask = (id) => {
 
     <div class="input__block">
       <input type="text" placeholder="Enter task" v-model="newTask.title" />
-      <!-- <Button :callBack="() => addTask" children="Add task" /> -->
-      <button type="button" @click="addTask">Add task</button>
+      <Button :callBack="() => addTask()" children="Add" />
     </div>
 
     <p v-if="!tasks.length" class="empty-list">You haven't any task yet</p>

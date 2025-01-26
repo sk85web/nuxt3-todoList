@@ -1,5 +1,5 @@
 <script setup>
-// import Button from '../components/ui/Button.vue';
+import Button from '../components/ui/Button.vue';
 
 defineProps({
   task: {
@@ -30,8 +30,7 @@ defineProps({
         {{ task.title }}
       </NuxtLink>
     </label>
-    <!-- <Button :callBack="removeTask(task.id)" children="Delete" /> -->
-    <button type="button" @click="removeTask(task.id)">Delete</button>
+    <Button :callBack="() => removeTask(task.id)" children="Delete" />
   </div>
 </template>
 
